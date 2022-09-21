@@ -2,17 +2,21 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
+
+
 router.get('/', function(req, res, next) {
-  res.render('admin/index');
+  res.render('admin/page-login' , {layout: 'admin-layout'});
 });
 
-router.get('/signin', function(req, res, next) {
-  res.render('admin/admin-login');
+
+router.get('/adminHome', function(req, res, next) {
+  res.render('admin/admin-home' , {layout: 'admin-layout'});
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render('admin/admin-signup');
-});
+
+
+
+
 
 
 
