@@ -18,5 +18,7 @@ routes for admin pages created
 
 partials setup done in views
 
+more pages added to admin side
+
 
 
