@@ -16,5 +16,7 @@ user html pages converted to hbs + src corrected + routes corrected
 
 routes for admin pages created
 
+partials setup done in views
+
 
 
