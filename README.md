@@ -20,5 +20,24 @@ partials setup done in views
 
 more pages added to admin side
 
+(addproduct, editproduct, viewproduct, categories, orders, userslist, page-register)  views and routes added in admin views
+
+Database created and connection established
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
 
 

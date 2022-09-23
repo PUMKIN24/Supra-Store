@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('user/index');
+  res.render('user/user-home');
 });
 
 router.get('/login', function(req, res, next) {
@@ -58,6 +58,11 @@ router.get('/tracking', function(req, res, next) {
 router.get('/blogDetails', function(req, res, next) {
   res.render('user/blogDetails');
 });
+
+router.get('/signUp', function(req, res, next) {
+  res.render('user/signUp');
+});
+
 
 
 
