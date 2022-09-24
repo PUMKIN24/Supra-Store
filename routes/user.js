@@ -1,14 +1,28 @@
 var express = require('express');
 var router = express.Router();
+const userController = require('../controller/userController')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('user/user-home');
-});
+//SIGNUP ---------------------------------------------------------------------------------------
+router.get('/signUp', userController.getSignUp)
 
-router.get('/login', function(req, res, next) {
-  res.render('user/login');
-});
+router.post('/signUp', userController.postSignUp)
+
+
+//LOGIN ----------------------------------------------------------------------------------------
+router.get('/login', userController.getLogin)
+
+router.post('/login', userController.postLogin)
+
+
+//HOMEPAGE---------------------------------------------------------------------------------------
+router.get('/', userController.getHomepage)
+
+//LOGOUT -------------------------------------------------------------------------------------------
+router.get('/logout', userController.getLogout)
+
+
+
+
 
 router.get('/blog', function(req, res, next) {
   res.render('user/blog');
@@ -59,9 +73,6 @@ router.get('/blogDetails', function(req, res, next) {
   res.render('user/blogDetails');
 });
 
-router.get('/signUp', function(req, res, next) {
-  res.render('user/signUp');
-});
 
 
 

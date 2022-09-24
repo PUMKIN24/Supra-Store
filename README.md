@@ -24,6 +24,18 @@ more pages added to admin side
 
 Database created and connection established
 
+CONTROLLERS AND HELPERS created 
+
+bcrypt & express-session modules added
+
+SIGNUP page session added 
+
+USER COLLECTION created
+
+LOGIN page session added 
+
+
+
 
 
 
