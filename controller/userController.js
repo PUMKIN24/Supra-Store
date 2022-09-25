@@ -1,4 +1,6 @@
 var userHelpers = require('../helpers/user-helpers')
+var twilioHelpers = require('../helpers/twilio-helpers')
+const twilio = require('twilio')
 const { response } = require('express')
 
 
@@ -7,19 +9,44 @@ const { response } = require('express')
 module.exports = {
 
 //SIGNUP-----------------------------------------------------------------------------------------
-    getSignUp: function (req, res) {
-      res.render('user/signUp')
-    },
+
+getSignUp: function (req, res, next) {
+  res.render('user/signUp')
+},
+
+postSignUp: function (req, res, next) {
+  req.session.body = req.body
+  twilioHelpers.doSms(req.session.body).then((data) => {
+    
+    if (data) {
+      res.render('user/otp')
+    } else {
+      res.redirect('/signUp')
+    }
+  })
+},
+
+postOtp: (req, res, next) => {
+  twilioHelpers.otpVerify(req.body, req.session.body).then((response) => {
+    userHelpers.doSignup(req.body).then((response) => {
+      res.redirect('/login')
+    })
+  })
+},
+
+
   
-    postSignUp: function (req, res) {
-      userHelpers.doSignUp(req.body).then((data) => {
-        console.log(data)
-     })
-    },
+
 
 //LOGIN-----------------------------------------------------------------------------------------------
     getLogin: function (req, res) {
-      res.render('user/login');
+      if (req.session.loggedIn){
+        res.redirect('/')
+      }else {
+
+        res.render('user/login',{loginErr:req.session.loginErr})
+        req.session.loginErr = false
+      }
     },
     postLogin: async function (req, res) {
       userHelpers.doLogin(req.body).then((response) => {
@@ -28,6 +55,7 @@ module.exports = {
           req.session.user = response.user;
           res.redirect('/')
         } else {
+          req.session.loginErr = "Invalid Email or Password"
           res.redirect('/login')
         }
       })
@@ -38,7 +66,9 @@ module.exports = {
   userDetails = req.session.user
   if (userDetails) {
     res.render('user/user-home', { userDetails})
-}  
+}  else{
+  res.redirect('/login')
+}
   },
 
 
@@ -46,7 +76,6 @@ module.exports = {
 getLogout: function (req, res) {
   req.session.loggedIn = false
   req.session.user = null
-  res.redirect('/')
+  res.redirect('/signUp ')
 },
-
 }

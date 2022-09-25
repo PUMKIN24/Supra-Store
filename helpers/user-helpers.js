@@ -1,19 +1,19 @@
 var db = require('../config/connection')
 var collections = require('../config/collections')
 const bcrypt = require('bcrypt');
-//const { response } = require('express')
+const { response } = require('express')
 
 
 module.exports = {
 
 
-    doSignUp: (userData) => {
+    doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
             userData.password = await bcrypt.hash(userData.password, 10)
             userData.Active = true
             db.get().collection(collections.USER_COLLECTION).insertOne(userData).then((data) => {
-                
-                resolve(data)  
+
+                resolve(data.insertedId)
             })
         })
 

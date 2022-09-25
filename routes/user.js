@@ -7,6 +7,8 @@ router.get('/signUp', userController.getSignUp)
 
 router.post('/signUp', userController.postSignUp)
 
+router.post('/otp', userController.postOtp)
+
 
 //LOGIN ----------------------------------------------------------------------------------------
 router.get('/login', userController.getLogin)
