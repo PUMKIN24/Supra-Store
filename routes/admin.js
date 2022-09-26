@@ -1,15 +1,29 @@
 var express = require('express');
 var router = express.Router();
+const multer = require('multer');
+const adminController=require('../controller/adminController')
 
-/* GET users listing. */
 
 
-// LOGIN --------------------------------------------------------------------
-router.get('/', function(req, res, next) {
-  res.render('admin/page-login' , {layout: 'admin-layout'} );
+//MULTER --------------------------------------------------------------------
+const storage = multer.diskStorage({
+  destination: "public/product-images",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '--' + file.originalname);
+  },
+});
+
+const uploads = multer({
+  storage
 });
 
 
+
+// LOGIN PAGE --------------------------------------------------------------------
+router.get('/',adminController.getLoginpage)
+
+// ADMIN LOGIN ----------------------------------------------------------------
+router.post('/',adminController.postLoginpage)
 
 //  HOMEPAGE-----------------------------------------------------------------
 router.get('/adminHome', function(req, res, next) {

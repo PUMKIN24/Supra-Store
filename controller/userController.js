@@ -71,6 +71,35 @@ postOtp: (req, res, next) => {
 }
   },
 
+//PROFILE ----------------------------------------------------------------------------------------------------
+  getProfile: function (req, res) {
+  var userDetails = req.session.user
+  res.render('user/profile', { user: true, userDetails })
+},
+
+//PRODUCT DETAILS ---------------------------------------------------------------------------------------------------------
+getProductDetails:  (req, res) => {
+
+  const userDetails = req.session.user
+  
+  userHelpers.proDetails(req.params.id).then((productDetails) => {
+    res.render('user/productDetails', { productDetails, user: true,wishlistCount, cartCount: req.session.cartVolume, userDetails })
+  })
+},
+
+
+//SHOP CATEGORY-----------------------------------------------------------------------------------------
+getShopCategory: async (req, res) => {
+
+  try {
+    res.render('user/shopCategory', { user: true, allProducts, cartCount,wishlistCount, userDetails: req.session.user, allCategories })
+
+  } catch (error) {
+    console.log(error);
+    res.redirect('/')
+  }
+
+},
 
 //LOGOUT -------------------------------------------------------------------------------------------
 getLogout: function (req, res) {
