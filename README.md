@@ -36,7 +36,29 @@ LOGIN page session added
 
 signup verification with twilio added, otp received, verification success
 
- user profile
+user profile
+
+multer added
+
+admin database created
+
+admin added to database
+
+product database created
+
+product added to database
+
+categories page created
+
+category added on page
+
+categories collection created
+
+category displayed on add product page
+
+
+
+
 
 
 

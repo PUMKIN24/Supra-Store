@@ -49,13 +49,6 @@ module.exports = {
         })
     },
 //------------------------------------------------------------------------------------------------------
-proDetails: (proId) => {
-    return new Promise(async (resolve, reject) => {
-        productDetails = await db.get().collection(collections.PRODUCT_COLLECTION).findOne({ _id: objectId(proId) })
-        resolve(productDetails)
-    })
-},
-
 
 
 }

@@ -4,11 +4,12 @@ var adminHelpers = require('../helpers/admin-helpers');
 module.exports = {
 
 //login get n post -----------------------------------------------------------
-    getLoginpage: function (req, res) {
+    getLoginPage: function (req, res) {
         res.render('admin/page-login', { layout: 'admin-layout' })
       },
+      
     
-      postLoginpage: (req, res) => {
+      postLoginPage: (req, res) => {
         adminHelpers.doLogin(req.body).then((response) => {
           if (response.status) {
             res.redirect('/admin/adminHome')
@@ -17,8 +18,39 @@ module.exports = {
           }
         })
       },
+
+      getAdminHome:(req, res)=> {
+
+        res.render('admin/admin-home', { layout: 'admin-layout', admin: true });
     
+      },
+
+      getAddProduct:async(req, res)=> {
+        let allCategories=await adminHelpers.getCategory()
+        res.render('admin/addProduct' , {layout: 'admin-layout', allCategories,admin: true });
+      },
+      postAddProduct:(req,res)=>{
+      //console.log(req.body,"popopopopo");
+      const images=[];
+        for (i = 0; i < req.files.length; i++) {
+          images[i] = req.files[i].filename;
+        }
+        req.body.images = images
+        adminHelpers.insertProducts(req.body)
+        res.redirect('/admin/addProduct')
+      },
 
 
+      getAddCategory:(req, res)=>{
+        adminHelpers.getCategory().then((allCategories)=>{
+          res.render('admin/categories' , {layout: 'admin-layout',allCategories, admin: true });
+        })
+      },
+
+      addCategory:(req,res)=>{
+        console.log(req.body,"fuuuck");
+        adminHelpers.addCategory(req.body)
+        res.redirect('/admin/categories')
+      },
     
 }

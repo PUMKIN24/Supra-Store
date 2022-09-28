@@ -40,7 +40,7 @@
                                 <tbody>
                                     {{#each allCategories}}
                                     <tr>
-                                        <th scope="row">{{inc @index}}</th>
+                                        <th scope="row">{{index}}</th>
                                         <td>{{this.category}}</td>
                                          <td><a href="/admin/deleteCategory/{{this._id}}" class="btn btn-danger">Delete</a></td>
                                     </tr>

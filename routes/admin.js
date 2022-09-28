@@ -20,41 +20,33 @@ const uploads = multer({
 
 
 // LOGIN PAGE --------------------------------------------------------------------
-router.get('/',adminController.getLoginpage)
+router.get('/',adminController.getLoginPage)
 
-// ADMIN LOGIN ----------------------------------------------------------------
-router.post('/',adminController.postLoginpage)
+router.post('/',adminController.postLoginPage)
 
 //  HOMEPAGE-----------------------------------------------------------------
-router.get('/adminHome', function(req, res, next) {
-
-  res.render('admin/admin-home', { layout: 'admin-layout', admin: true });
-});
+router.get('/adminHome',adminController.getAdminHome) 
 
 
 //  VIEW PRODUCTS------------------------------------------------------------
-router.get('/viewProducts', function(req, res, next) {
-  res.render('admin/viewProducts' , {layout: 'admin-layout', admin: true });
-});
+// router.get('/viewProducts', function(req, res, next) {
+//   res.render('admin/viewProducts' , {layout: 'admin-layout', admin: true });
+// });
 
 
 
 // ADD PRODUCT-----------------------------------------------------------------
-router.get('/addProduct', function(req, res, next) {
-  res.render('admin/addProduct' , {layout: 'admin-layout', admin: true });
-});
+router.get('/addProduct',adminController.getAddProduct)
 
-router.post('/addProduct', (req,res)=>{
-  console.log(req.body)
-  console.log(req.files.images)
-})
+router.post('/addProduct',uploads.array("image",3),adminController.postAddProduct)
+
+
+
 
 
 // CATEGORIES--------------------------------------------------------------------
-router.get('/categories', function(req, res, next) {
-  res.render('admin/categories' , {layout: 'admin-layout', admin: true });
-});
-
+router.get('/categories',adminController.getAddCategory)
+router.post('/categories',adminController.addCategory)
 
 //  USERS-------------------------------------------------------------------------
 router.get('/users', function(req, res, next) {
