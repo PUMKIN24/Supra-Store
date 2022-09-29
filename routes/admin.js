@@ -29,9 +29,6 @@ router.get('/adminHome',adminController.getAdminHome)
 
 
 //  VIEW PRODUCTS------------------------------------------------------------
-// router.get('/viewProducts', function(req, res, next) {
-//   res.render('admin/viewProducts' , {layout: 'admin-layout', admin: true });
-// });
 
 
 
@@ -40,7 +37,8 @@ router.get('/addProduct',adminController.getAddProduct)
 
 router.post('/addProduct',uploads.array("image",3),adminController.postAddProduct)
 
-
+//view PRODUCT-----------------------------------------------------------------
+router.get('/viewProducts',adminController.getViewProducts)
 
 
 
@@ -49,14 +47,12 @@ router.get('/categories',adminController.getAddCategory)
 router.post('/categories',adminController.addCategory)
 
 //  USERS-------------------------------------------------------------------------
-router.get('/users', function(req, res, next) {
-  res.render('admin/users' , {layout: 'admin-layout', admin: true });
-});
+router.get('/users',adminController.getAllUsers)
 
 //  ORDERS-----------------------------------------------------------------------
-router.get('/orders', function(req, res, next) {
-  res.render('admin/orders' , {layout: 'admin-layout', admin: true });
-});
+// router.get('/orders', function(req, res, next) {
+//   res.render('admin/orders' , {layout: 'admin-layout', admin: true });
+// });
 
 
 //
@@ -65,9 +61,9 @@ router.get('/orders', function(req, res, next) {
 // });
 
 //  EDIT PRODUCT-------------------------------------------------------------------
-router.get('/editProduct', function(req, res, next) {
-  res.render('admin/editProduct' , {layout: 'admin-layout', admin: true });
-});
+// router.get('/editProduct', function(req, res, next) {
+//   res.render('admin/editProduct' , {layout: 'admin-layout', admin: true });
+// });
 
 
 

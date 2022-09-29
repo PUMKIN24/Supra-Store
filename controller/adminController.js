@@ -25,6 +25,13 @@ module.exports = {
     
       },
 
+      getAllUsers: (req, res)=> {
+        adminHelpers.getAllUsers().then((allUsers)=>{
+
+          res.render('admin/users' , {layout: 'admin-layout',allUsers, admin: true });
+        })
+      },
+
       getAddProduct:async(req, res)=> {
         let allCategories=await adminHelpers.getCategory()
         res.render('admin/addProduct' , {layout: 'admin-layout', allCategories,admin: true });
@@ -52,5 +59,12 @@ module.exports = {
         adminHelpers.addCategory(req.body)
         res.redirect('/admin/categories')
       },
+
+
+      getViewProducts:(req,res)=>{
+        adminHelpers.getAllProducts().then((products)=>{
+          res.render('admin/viewProducts',{layout: 'admin-layout',products,admin: true} )
+        })
+      }
     
 }

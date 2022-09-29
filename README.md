@@ -40,6 +40,8 @@ user profile
 
 multer added
 
+products added via multer
+
 admin database created
 
 admin added to database
@@ -55,6 +57,10 @@ category added on page
 categories collection created
 
 category displayed on add product page
+
+adding images to admin page via multer
+
+
 
 
 

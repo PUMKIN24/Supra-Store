@@ -48,7 +48,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each users}}
+                                        {{#each allUsers}}
                                         <tr>
                                             <td class="serial">1.</td>
                                             <td>{{this._id}}</td>
@@ -65,7 +65,6 @@
                                                     onclick="return confirm('Are you want Unblock {{ this.username}}')">Unblock</a>
                                                 {{/if}}
                                             </td>
-
                                         </tr>
                                         {{/each}}
                                     </tbody>
