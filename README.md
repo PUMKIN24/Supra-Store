@@ -62,6 +62,8 @@ adding images to admin page via multer
 
 delete category done
 
+block user and unblock user done
+
 
 
 

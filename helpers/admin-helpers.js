@@ -36,6 +36,20 @@ module.exports = {
 
     },
 
+    blockUser: (userId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { Active: false } })
+            resolve()
+        })
+    },
+
+    unBlockUser:(userId)=>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { Active: true } })
+        })
+    },
+    
+
 
     insertProducts:(proDetails)=>{
         return new Promise((resolve,reject)=>{

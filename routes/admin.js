@@ -31,6 +31,10 @@ router.get('/adminHome',adminController.getAdminHome)
 //  USERS-------------------------------------------------------------------------
 router.get('/users',adminController.getAllUsers)
 
+router.get('/blockUser/:id',adminController.getBlockUser)
+
+router.get('/unblockUser/:id', adminController.getUnblockUser)
+
 
 // ADD PRODUCT-----------------------------------------------------------------
 router.get('/addProduct',adminController.getAddProduct)

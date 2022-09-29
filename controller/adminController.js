@@ -35,6 +35,17 @@ module.exports = {
         })
       },
 
+
+      getBlockUser: (req, res)=> {
+        adminHelpers.blockUser(req.params.id)
+        res.redirect('/admin/users')
+      },
+
+      getUnblockUser: (req,res)=>{
+        adminHelpers.unBlockUser(req.params.id)
+        res.redirect('/admin/users')
+      },
+
 //ADD PRODUCT -----------------------------------------------------------
 
       getAddProduct:async(req, res)=> {
