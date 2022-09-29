@@ -28,6 +28,14 @@ module.exports = {
     },
 
 
+    getAllUsers:()=>{
+        return new Promise((resolve, reject) => {
+            let allUsers=db.get().collection(collections.USER_COLLECTION).find({}).toArray()
+            resolve(allUsers)
+        })
+
+    },
+
 
     insertProducts:(proDetails)=>{
         return new Promise((resolve,reject)=>{
@@ -51,13 +59,12 @@ resolve()
         })
     },
 
-    getAllUsers:()=>{
-        return new Promise((resolve, reject) => {
-            let allUsers=db.get().collection(collections.USER_COLLECTION).find({}).toArray()
-            resolve(allUsers)
-        })
+    delCategory: (catId) => {
+        db.get().collection(collections.CATEGORY_COLLECTION).deleteOne({ _id: objectId(catId) })
 
     },
+
+
 
 
     getAllProducts:()=>{

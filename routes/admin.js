@@ -28,8 +28,8 @@ router.post('/',adminController.postLoginPage)
 router.get('/adminHome',adminController.getAdminHome) 
 
 
-//  VIEW PRODUCTS------------------------------------------------------------
-
+//  USERS-------------------------------------------------------------------------
+router.get('/users',adminController.getAllUsers)
 
 
 // ADD PRODUCT-----------------------------------------------------------------
@@ -37,7 +37,7 @@ router.get('/addProduct',adminController.getAddProduct)
 
 router.post('/addProduct',uploads.array("image",3),adminController.postAddProduct)
 
-//view PRODUCT-----------------------------------------------------------------
+//VIEW PRODUCTS-----------------------------------------------------------------
 router.get('/viewProducts',adminController.getViewProducts)
 
 
@@ -45,9 +45,8 @@ router.get('/viewProducts',adminController.getViewProducts)
 // CATEGORIES--------------------------------------------------------------------
 router.get('/categories',adminController.getAddCategory)
 router.post('/categories',adminController.addCategory)
+router.get('/deleteCategory/:id',adminController.getDeleteCategory)
 
-//  USERS-------------------------------------------------------------------------
-router.get('/users',adminController.getAllUsers)
 
 //  ORDERS-----------------------------------------------------------------------
 // router.get('/orders', function(req, res, next) {

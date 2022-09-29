@@ -60,6 +60,8 @@ category displayed on add product page
 
 adding images to admin page via multer
 
+delete category done
+
 
 
 

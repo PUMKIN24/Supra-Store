@@ -3,7 +3,7 @@ var adminHelpers = require('../helpers/admin-helpers');
 
 module.exports = {
 
-//login get n post -----------------------------------------------------------
+//LOGIN -----------------------------------------------------------
     getLoginPage: function (req, res) {
         res.render('admin/page-login', { layout: 'admin-layout' })
       },
@@ -18,6 +18,8 @@ module.exports = {
           }
         })
       },
+ 
+//HOME -----------------------------------------------------------
 
       getAdminHome:(req, res)=> {
 
@@ -25,6 +27,7 @@ module.exports = {
     
       },
 
+//USERS -----------------------------------------------------------
       getAllUsers: (req, res)=> {
         adminHelpers.getAllUsers().then((allUsers)=>{
 
@@ -32,12 +35,14 @@ module.exports = {
         })
       },
 
+//ADD PRODUCT -----------------------------------------------------------
+
       getAddProduct:async(req, res)=> {
         let allCategories=await adminHelpers.getCategory()
         res.render('admin/addProduct' , {layout: 'admin-layout', allCategories,admin: true });
       },
+
       postAddProduct:(req,res)=>{
-      //console.log(req.body,"popopopopo");
       const images=[];
         for (i = 0; i < req.files.length; i++) {
           images[i] = req.files[i].filename;
@@ -47,6 +52,7 @@ module.exports = {
         res.redirect('/admin/addProduct')
       },
 
+      //CATEGORY --------------------------------------------------------------------
 
       getAddCategory:(req, res)=>{
         adminHelpers.getCategory().then((allCategories)=>{
@@ -55,12 +61,16 @@ module.exports = {
       },
 
       addCategory:(req,res)=>{
-        console.log(req.body,"fuuuck");
         adminHelpers.addCategory(req.body)
         res.redirect('/admin/categories')
       },
 
+      getDeleteCategory: (req, res) => {
+        adminHelpers.delCategory(req.params.id)
+        res.redirect('/admin/categories')
+      },
 
+//VIEW PRODUCTS ----------------------------------------------------------------------
       getViewProducts:(req,res)=>{
         adminHelpers.getAllProducts().then((products)=>{
           res.render('admin/viewProducts',{layout: 'admin-layout',products,admin: true} )
