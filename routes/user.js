@@ -25,8 +25,12 @@ router.get('/profile', userController.getProfile)
 //SHOP -------------------------------------------------------------------------------------------------------
 router.get('/shopCategory', userController.getShopCategory)
 
-//MEN CATEGORY -------------------------------------------------------------------------------------------------------
+//MEN WOMEN KIDS UNISEX CATEGORY -------------------------------------------------------------------------------------------------------
 router.get('/menCategory', userController.getMenCategory)
+router.get('/womenCategory',userController.getWomenCategory)
+router.get('/unisexCategory',userController.getUnisexCategory)
+router.get('/kidsCategory',userController.getKidsCategory)
+
 
 //PRODUCT DETAILS ---------------------------------------------------------------------------------------------
 router.get('/productDetails/:id',userController.getProductDetails)

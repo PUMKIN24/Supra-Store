@@ -112,6 +112,39 @@ getShopCategory: async (req, res) => {
 
   },
 
+//WOMEN CATEGORY -------------------------------------------------------------------------------------------
+  getWomenCategory: (req,res)=>{
+    userHelpers.getAllProductsCat('women').then((allCatProducts)=>{
+      let category = 'women'
+      var userDetails = req.session
+      res.render('user/category',{user:true, category,userDetails,allCatProducts})
+    })
+ 
+  },
+
+    //UNISEX CATEGORY -------------------------------------------------------------------------------------------
+    getUnisexCategory: (req,res)=>{
+      userHelpers.getAllProductsCat('UNISEX').then((allCatProducts)=>{
+        let category = 'UNISEX'
+        var userDetails = req.session
+        res.render('user/category',{user:true, category,userDetails,allCatProducts})
+      })
+   
+    },
+
+  //KIDS CATEGORY -------------------------------------------------------------------------------------------
+  getKidsCategory: (req,res)=>{
+    userHelpers.getAllProductsCat('Kids').then((allCatProducts)=>{
+      let category = 'Kids'
+      var userDetails = req.session
+      res.render('user/category',{user:true, category,userDetails,allCatProducts})
+    })
+ 
+  },
+
+
+
+
 //LOGOUT -------------------------------------------------------------------------------------------
 getLogout: function (req, res) {
   req.session.loggedIn = false

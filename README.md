@@ -74,6 +74,8 @@ category page re-ordered
 
 men category done
 
+all categories added (women,unisex,kids)
+
 
 
 
