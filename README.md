@@ -66,6 +66,10 @@ block user and unblock user done
 
 all products and all categories connected to user/shopCategory page 
 
+productDetails page added
+
+product details added to productDetails page
+
 
 
 

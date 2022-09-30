@@ -1,7 +1,8 @@
 var db = require('../config/connection')
 var collections = require('../config/collections')
 const bcrypt = require('bcrypt');
-const { response } = require('express')
+const { response } = require('express');
+const objectId = require('mongodb').ObjectId
 
 
 module.exports = {
@@ -70,8 +71,14 @@ getAllCat:()=>{
             reject(error)
         }
     })
+},
+
+
+//------------------------------------------------------------------------------------------------------
+proDetails: (proId) => {
+    return new Promise(async (resolve, reject) => {
+        productDetails = await db.get().collection(collections.PRODUCT_COLLECTION).findOne({ _id: objectId(proId) })
+        resolve(productDetails)
+    })
 }
-
-
-
 }

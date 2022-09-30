@@ -78,7 +78,12 @@ postOtp: (req, res, next) => {
 },
 
 //PRODUCT DETAILS ---------------------------------------------------------------------------------------------------------
-
+getProductDetails: async (req,res)=>{
+  const userDetails = req.session.user
+  userHelpers.proDetails(req.params.id).then((productDetails)=> {
+  res.render('user/productDetails',{productDetails,userDetails, user:true})
+  })
+},
 
 //SHOP CATEGORY-----------------------------------------------------------------------------------------
 

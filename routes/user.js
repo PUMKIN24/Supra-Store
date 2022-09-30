@@ -25,6 +25,8 @@ router.get('/profile', userController.getProfile)
 //SHOP -------------------------------------------------------------------------------------------------------
 router.get('/shopCategory', userController.getShopCategory)
 
+//PRODUCT DETAILS ---------------------------------------------------------------------------------------------
+router.get('/productDetails/:id',userController.getProductDetails)
 
 //LOGOUT -------------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)
