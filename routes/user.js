@@ -23,7 +23,7 @@ router.get('/', userController.getHomepage)
 router.get('/profile', userController.getProfile)
 
 //SHOP -------------------------------------------------------------------------------------------------------
-// router.get('/shopCategory', userController.getShopCategory)
+router.get('/shopCategory', userController.getShopCategory)
 
 
 //LOGOUT -------------------------------------------------------------------------------------------

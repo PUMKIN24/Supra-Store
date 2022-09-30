@@ -50,5 +50,28 @@ module.exports = {
     },
 //------------------------------------------------------------------------------------------------------
 
+getAllProducts: ()=>{
+    return new Promise(async(resolve, reject) => {
+        try {
+            let allProducts= await db.get().collection(collections.PRODUCT_COLLECTION).find({}).toArray()
+            resolve(allProducts)
+        } catch (error) {
+            reject(error)
+        }
+    })
+},
+
+getAllCat:()=>{
+    return new Promise(async(resolve, reject) => {
+        try {
+            let allCategory= await db.get().collection(collections.CATEGORY_COLLECTION).find({}, {_id:0}).toArray()
+            resolve(allCategory)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 }

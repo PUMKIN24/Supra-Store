@@ -64,6 +64,10 @@ delete category done
 
 block user and unblock user done
 
+all products and all categories connected to user/shopCategory page 
+
+
+
 
 
 

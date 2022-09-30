@@ -58,11 +58,6 @@ router.get('/deleteCategory/:id',adminController.getDeleteCategory)
 // });
 
 
-//
-// router.get('/pageRegister', function(req, res, next) {
-//   res.render('admin/page-register' , { admin: true });
-// });
-
 //  EDIT PRODUCT-------------------------------------------------------------------
 // router.get('/editProduct', function(req, res, next) {
 //   res.render('admin/editProduct' , {layout: 'admin-layout', admin: true });

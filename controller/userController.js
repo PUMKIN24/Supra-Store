@@ -82,6 +82,20 @@ postOtp: (req, res, next) => {
 
 //SHOP CATEGORY-----------------------------------------------------------------------------------------
 
+getShopCategory: async (req, res) => {
+
+  try {
+
+    const allCategories = await userHelpers.getAllCat()
+    const allProducts = await userHelpers.getAllProducts()
+    res.render('user/shopCategory', { user: true, allProducts, userDetails: req.session.user, allCategories })
+
+  } catch (error) {
+    console.log(error);
+    res.redirect('/')
+  }
+
+},
 
 
 //LOGOUT -------------------------------------------------------------------------------------------
