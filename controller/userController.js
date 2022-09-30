@@ -102,6 +102,15 @@ getShopCategory: async (req, res) => {
 
 },
 
+//MEN CATEGORY -------------------------------------------------------------------------------------------
+  getMenCategory:(req,res)=>{
+    userHelpers.getAllProductsCat('men').then((allCatProducts)=>{
+      let category = 'men'
+      var userDetails = req.session
+      res.render('user/category',{user:true, category,userDetails,allCatProducts})
+    })
+
+  },
 
 //LOGOUT -------------------------------------------------------------------------------------------
 getLogout: function (req, res) {

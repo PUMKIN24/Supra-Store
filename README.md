@@ -70,7 +70,9 @@ productDetails page added
 
 product details added to productDetails page
 
+category page re-ordered
 
+men category done
 
 
 

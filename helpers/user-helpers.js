@@ -73,6 +73,14 @@ getAllCat:()=>{
     })
 },
 
+//------------------------------------------------------------------------------------------------------
+getAllProductsCat: (category) => {
+    return new Promise(async (resolve, reject) => {
+        let allCatProducts = await db.get().collection(collections.PRODUCT_COLLECTION).find({ Categories: category }).toArray()
+
+        resolve(allCatProducts)
+    })
+},
 
 //------------------------------------------------------------------------------------------------------
 proDetails: (proId) => {
