@@ -43,6 +43,8 @@ router.post('/delete-cart-product',userController.postdelCartPro)
 //ADD TO CART ------------------------------------------------------------------------------------
 router.get('/addToCart/:id', userController.getAddToCart)
  
+//CHANGE PRODUCT QUANTITY
+router.post('/change-product-quantity',userController.postChangeProductQuantity)
 
 //LOGOUT -----------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)

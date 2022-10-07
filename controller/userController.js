@@ -199,6 +199,21 @@ postdelCartPro: async (req, res) => {
 
 },
 
+//postChangeProductQuantity-----------------------------------------------------------------------------------
+
+postChangeProductQuantity: async (req, res) => {
+  try {
+    let response = await userHelpers.changeProductQuantity(req.body)
+    response.proTotal = await userHelpers.postProTotal(req.body.user, req.body.product)
+    response.total = await userHelpers.getTotalAmount(req.session.user._id)
+    res.json(response)
+  } catch (error) {
+    console.log(error);
+    res.redirect('/')
+  }
+},
+
+
 
 
 

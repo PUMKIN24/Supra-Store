@@ -175,22 +175,7 @@ getCartProducts: (userId) => {
 
                 }
 
-                // {
-                //     $lookup: {
-                //         from: collections.PRODUCT_COLLECTION,
-                //         let: { proList: '$products' },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     $expr: {
-                //                         $in: ['$_id', "$$proList"]
-                //                     }
-                //                 }
-                //             }
-                //         ],
-                //         as: 'cartItems'
-                //     }
-                // }
+                
             ]).toArray()
             console.log(cartItems, "cartitems");
             resolve(cartItems)
@@ -227,6 +212,65 @@ delCartPro: (details) => {
 
                         resolve(response)
                     })
+        } catch (error) {
+            reject(error)
+        }
+    })
+},
+
+
+//---------------------------------------------------------------------------------------------------------------------------
+postProTotal: async (userId, proId) => {
+    console.log(proId, 'proId');
+    return new Promise(async (resolve, reject) => {
+        try {
+            let proTotal = await db.get().collection(collections.CART_COLLECTION).aggregate([
+
+                {
+                    $match: { user: objectId(userId) }
+                },
+                {
+                    $unwind: '$products' //products array  in the cart// 
+                },
+                {
+                    $project: {
+                        item: '$products.item',
+                        quantity: '$products.quantity'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: collections.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                },
+
+                {
+
+                    $unwind:
+                        '$product'
+
+                },
+
+                // {
+                //     $match:{product:{_id:objectId(proId)}}
+                // }
+                {
+                    $match: { "product._id": objectId(proId) }
+                },
+
+                {
+                    $project: {
+                        _id: 0,
+                        proTotall: { $multiply: ['$quantity', { $toInt: '$product.Price' }] }
+                    }
+                }
+
+            ]).toArray()
+            console.log(proTotal[0], "proTotal user-help");
+            resolve(proTotal[0])
         } catch (error) {
             reject(error)
         }
@@ -284,5 +328,41 @@ getTotalAmount: (userId) => {
         }
     })
 },
+
+//---------------------------------------------------------------------------------------------------------
+
+changeProductQuantity: (details) => {
+    details.count = parseInt(details.count)
+
+    details.quantity = parseInt(details.quantity)
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (details.count == -1 && details.quantity == 1) {
+                console.log('hiii');
+                db.get().collection(collections.CART_COLLECTION)
+                    .updateOne({ _id: objectId(details.cart) },
+                        { $pull: { products: { item: objectId(details.product) } } }).then((response) => {
+
+                            resolve({ removeProduct: true })
+                        })
+
+            }
+            else {
+                db.get().collection(collections.CART_COLLECTION)
+                    .updateOne({ _id: objectId(details.cart), 'products.item': objectId(details.product) },
+                        {
+                            $inc: { 'products.$.quantity': details.count }
+                        }).then((response) => {
+
+                            resolve({ status: true })
+                        })
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+},
+
 
 }

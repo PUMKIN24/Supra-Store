@@ -82,6 +82,26 @@ cart page and route added
 
 addToCart function created and attached to shopCategory 
 
+get cart added 
+ 
+add to cart added
+
+delete cart product added
+
+cart count added
+
+adding products to cart done
+
+delete cart product done
+
+changing product quantity done
+
+amount per product added
+
+total amount done
+
+
+
 
 
 
