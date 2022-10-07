@@ -97,7 +97,7 @@ proDetails: (proId) => {
 
 addToCart: (proId, userId) => {
     let proObj = {
-        item: objectId(proId),
+        item: objectId(proId), 
         quantity: 1
     }
     return new Promise(async (resolve, reject) => {
@@ -361,6 +361,84 @@ changeProductQuantity: (details) => {
         } catch (error) {
             reject(error)
         }
+    })
+},
+
+//------------------------------------------------------------------------------------------------------------
+
+addToWishlist: (proId, userId) => {
+    let proObj = {
+        item: objectId(proId),
+
+    }
+    return new Promise(async (resolve, reject) => {
+        let userWishlist = await db.get().collection(collections.WISHLIST_COLLECTION).findOne({ user: objectId(userId) })
+        if (userWishlist) {
+            let proExist = userWishlist.products.findIndex(product => product.item == proId)
+            console.log(proExist);
+            if (proExist != -1) {
+                resolve({ status: "already exist" })
+            } else {
+                db.get().collection(collections.WISHLIST_COLLECTION).updateOne({ user: objectId(userId) },
+                    {
+                        $push: { products: proObj }
+                    })
+            }
+        } else {
+            let wishlistObj = {
+                user: objectId(userId),
+                products: [proObj]
+                // products: [objectId(proId)]
+            }
+            db.get().collection(collections.WISHLIST_COLLECTION).insertOne(wishlistObj).then((response) => {
+                resolve()
+            })
+        }
+    })
+},
+
+
+getWishlistCount: (userId) => {
+    return new Promise(async (resolve, reject) => {
+        count = 0
+        let wishlist = await db.get().collection(collections.WISHLIST_COLLECTION).findOne({ user: objectId(userId) })
+        if (wishlist) {
+            count = wishlist.products.length
+        }
+        resolve(count)
+    })
+},
+
+getWishlistProducts: (userId) => {
+    return new Promise(async (resolve, reject) => {
+        let wishlistProducts = await db.get().collection(collections.WISHLIST_COLLECTION).aggregate([
+            {
+                $match: { user: objectId(userId) }
+            },
+            {
+                $unwind: '$products'
+            },
+            {
+                $project: {
+                    item: '$products.item'
+                }
+            },
+            {
+                $lookup: {
+                    from: collections.PRODUCT_COLLECTION,
+                    localField: 'item',
+                    foreignField: '_id',
+                    as: 'product'
+                }
+            },
+            {
+                $unwind: '$product'
+
+
+            }
+        ]).toArray()
+        console.log(wishlistProducts)
+        resolve(wishlistProducts)
     })
 },
 

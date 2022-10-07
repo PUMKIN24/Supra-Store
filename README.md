@@ -100,6 +100,20 @@ amount per product added
 
 total amount done
 
+wishlist page created
+
+wishlist collection created
+
+add to wishlist done
+
+wishlist count done
+
+get wishlist products done
+
+cart count and wishlist count badges added in all pages
+
+
+
 
 
 

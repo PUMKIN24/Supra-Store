@@ -38,13 +38,13 @@ router.get('/productDetails/:id',userController.getProductDetails)
 
 //CART -----------------------------------------------------------------------------------------
 router.get('/cart/:id',userController.getCart)
-router.post('/delete-cart-product',userController.postdelCartPro)
-
-//ADD TO CART ------------------------------------------------------------------------------------
+router.post('/delete-cart-product',userController.postDelCartPro)
 router.get('/addToCart/:id', userController.getAddToCart)
- 
-//CHANGE PRODUCT QUANTITY
 router.post('/change-product-quantity',userController.postChangeProductQuantity)
+
+//WISHLIST------------------------------------------------------------------------------------------
+router.get('/addToWishlist/:id', userController.getAddToWishlist)
+router.get('/wishList/:id',userController.getWishlist)
 
 //LOGOUT -----------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)

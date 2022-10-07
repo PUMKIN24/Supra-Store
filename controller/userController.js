@@ -62,27 +62,36 @@ postOtp: (req, res, next) => {
     },
 
 //HOMEPAGE----------------------------------------------------------------------------------------------
+
   getHomepage: async function (req, res) {
   userDetails = req.session.user
   if (userDetails) {
-    res.render('user/user-home', { userDetails})
+    var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    let cartCount = await userHelpers.getCartCount(req.session.user._id)
+    res.render('user/user-home', { userDetails,wishlistCount,cartCount})
 }  else{
   res.redirect('/login')
 }
   },
 
 //PROFILE ----------------------------------------------------------------------------------------------------
-  getProfile: function (req, res) {
+  getProfile: async function (req, res) {
   var userDetails = req.session.user
-  res.render('user/profile', { user: true, userDetails })
-},
+  if (userDetails){
+    var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    let cartCount = await userHelpers.getCartCount(req.session.user._id)
+  res.render('user/profile', { user: true, userDetails ,wishlistCount,cartCount})
+}},
 
 //PRODUCT DETAILS ---------------------------------------------------------------------------------------------------------
 getProductDetails: async (req,res)=>{
   const userDetails = req.session.user
+  if (userDetails){
+    var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    let cartCount = await userHelpers.getCartCount(req.session.user._id) 
   userHelpers.proDetails(req.params.id).then((productDetails)=> {
-  res.render('user/productDetails',{productDetails,userDetails, user:true})
-  })
+  res.render('user/productDetails',{productDetails,userDetails, user:true,wishlistCount,cartCount})
+  })}
 },
 
 //SHOP CATEGORY-----------------------------------------------------------------------------------------
@@ -94,7 +103,9 @@ getProductDetails: async (req,res)=>{
       if (userDetails){
       const allCategories = await userHelpers.getAllCat()
       const allProducts = await userHelpers.getAllProducts()
-      res.render('user/shopCategory', { user: true, allProducts, userDetails: req.session.user, allCategories })
+      var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let cartCount = await userHelpers.getCartCount(req.session.user._id)
+      res.render('user/shopCategory', { user: true, allProducts, userDetails: req.session.user,wishlistCount,cartCount, allCategories })
   
     } } catch (error) {
       console.log(error);
@@ -113,42 +124,54 @@ getProductDetails: async (req,res)=>{
 
 
 //MEN CATEGORY -------------------------------------------------------------------------------------------
-  getMenCategory:(req,res)=>{
+  getMenCategory:async (req,res)=>{
+    if (userDetails){
+      var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let cartCount = await userHelpers.getCartCount(req.session.user._id)  
     userHelpers.getAllProductsCat('men').then((allCatProducts)=>{
       let category = 'men'
       var userDetails = req.session
-      res.render('user/category',{user:true, category,userDetails,allCatProducts})
-    })
+      res.render('user/category',{user:true, category,userDetails,wishlistCount,cartCount,allCatProducts})
+    })}
 
   },
 
 //WOMEN CATEGORY -------------------------------------------------------------------------------------------
-  getWomenCategory: (req,res)=>{
+  getWomenCategory:async (req,res)=>{
+    if (userDetails){
+      var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let cartCount = await userHelpers.getCartCount(req.session.user._id)  
     userHelpers.getAllProductsCat('women').then((allCatProducts)=>{
       let category = 'women'
       var userDetails = req.session
-      res.render('user/category',{user:true, category,userDetails,allCatProducts})
-    })
+      res.render('user/category',{user:true, category,userDetails,allCatProducts,wishlistCount,cartCount})
+    })}
  
   },
 
     //UNISEX CATEGORY -------------------------------------------------------------------------------------------
-    getUnisexCategory: (req,res)=>{
+    getUnisexCategory:async (req,res)=>{
+      if (userDetails){
+        var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+        let cartCount = await userHelpers.getCartCount(req.session.user._id)  
       userHelpers.getAllProductsCat('UNISEX').then((allCatProducts)=>{
         let category = 'UNISEX'
         var userDetails = req.session
-        res.render('user/category',{user:true, category,userDetails,allCatProducts})
-      })
+        res.render('user/category',{user:true, category,userDetails,allCatProducts,cartCount,wishlistCount})
+      })}
    
     },
 
   //KIDS CATEGORY -------------------------------------------------------------------------------------------
-  getKidsCategory: (req,res)=>{
+  getKidsCategory:async (req,res)=>{
+    if (userDetails){
+      var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let cartCount = await userHelpers.getCartCount(req.session.user._id)  
     userHelpers.getAllProductsCat('Kids').then((allCatProducts)=>{
       let category = 'Kids'
       var userDetails = req.session
-      res.render('user/category',{user:true, category,userDetails,allCatProducts})
-    })
+      res.render('user/category',{user:true, category,userDetails,allCatProducts,cartCount,wishlistCount})
+    })}
  
   },
 
@@ -158,21 +181,21 @@ getCart: async function (req, res, next) {
   var userDetails = req.session.user
   let cartCount = null
   if (userDetails) {
-    
+    var wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
     let cartCount = await userHelpers.getCartCount(req.session.user._id)
-
     let products = await userHelpers.getCartProducts(req.session.user._id)
     if (products.length > 0) {
       totalValue = await userHelpers.getTotalAmount(req.session.user._id)
-      
+     
     } else {
       totalValue = 0
     }
-    res.render('user/cart', { userDetails, totalValue,  cartCount, user: true, products })
+    res.render('user/cart', { userDetails, totalValue, wishlistCount, cartCount, user: true, products })
   } else {
     res.redirect('/login')
   }
 },
+
 
 
 
@@ -188,7 +211,7 @@ getAddToCart: function (req, res) {
 
 //DEL CART PRODUCT ----------------------------------------------------------------------------------------
 
-postdelCartPro: async (req, res) => {
+postDelCartPro: async (req, res) => {
   try {
     const response = await userHelpers.delCartPro(req.body)
     res.json(response)
@@ -213,6 +236,29 @@ postChangeProductQuantity: async (req, res) => {
   }
 },
 
+//WISHLIST--------------------------------------------------------------------------------------------
+getAddToWishlist: function (req, res) {
+  userHelpers.addToWishlist(req.params.id, req.session.user._id).then(() => {
+    res.json({ status: true })
+
+  })
+},
+
+
+
+getWishlist: async function (req, res, next) {
+  var userDetails = req.session.user
+  let wishlistCount = null
+  if (userDetails) {
+    var cartCount = await userHelpers.getCartCount(req.session.user._id)
+    req.session.cartVolume = cartCount;
+    let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    let products = await userHelpers.getWishlistProducts(req.session.user._id)
+    res.render('user/wishlist', { userDetails, cartCount, wishlistCount, user: true, products })
+  } else {
+    res.redirect('/login')
+  }
+},
 
 
 
