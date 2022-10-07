@@ -19,7 +19,7 @@ const uploads = multer({
 
 
 
-// LOGIN PAGE --------------------------------------------------------------------
+// LOGIN PAGE ----------------------------------------------------------------
 router.get('/',adminController.getLoginPage)
 
 router.post('/',adminController.postLoginPage)
@@ -28,7 +28,7 @@ router.post('/',adminController.postLoginPage)
 router.get('/adminHome',adminController.getAdminHome) 
 
 
-//  USERS-------------------------------------------------------------------------
+//  USERS--------------------------------------------------------------------
 router.get('/users',adminController.getAllUsers)
 
 router.get('/blockUser/:id',adminController.getBlockUser)
@@ -36,17 +36,17 @@ router.get('/blockUser/:id',adminController.getBlockUser)
 router.get('/unblockUser/:id', adminController.getUnblockUser)
 
 
-// ADD PRODUCT-----------------------------------------------------------------
+// ADD PRODUCT--------------------------------------------------------------
 router.get('/addProduct',adminController.getAddProduct)
 
 router.post('/addProduct',uploads.array("image",3),adminController.postAddProduct)
 
-//VIEW PRODUCTS-----------------------------------------------------------------
+//VIEW PRODUCTS------------------------------------------------------------
 router.get('/viewProducts',adminController.getViewProducts)
 
 
 
-// CATEGORIES--------------------------------------------------------------------
+// CATEGORIES--------------------------------------------------------------
 router.get('/categories',adminController.getAddCategory)
 router.post('/categories',adminController.addCategory)
 router.get('/deleteCategory/:id',adminController.getDeleteCategory)

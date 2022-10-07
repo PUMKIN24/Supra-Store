@@ -76,6 +76,12 @@ men category done
 
 all categories added (women,unisex,kids)
 
+cart collection created
+
+cart page and route added
+
+addToCart function created and attached to shopCategory 
+
 
 
 

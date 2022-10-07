@@ -87,20 +87,30 @@ getProductDetails: async (req,res)=>{
 
 //SHOP CATEGORY-----------------------------------------------------------------------------------------
 
-getShopCategory: async (req, res) => {
+  getShopCategory: async (req, res) => {
+    var userDetails = req.session.user
+    
+    try {
+      if (userDetails){
+      const allCategories = await userHelpers.getAllCat()
+      const allProducts = await userHelpers.getAllProducts()
+      res.render('user/shopCategory', { user: true, allProducts, userDetails: req.session.user, allCategories })
+  
+    } } catch (error) {
+      console.log(error);
+      res.redirect('/')
+    }
+  
+  },
 
-  try {
+  shopALL: async (req, res) => {
+    allFilteredProducts = await userHelpers.getAllProducts()
+    res.redirect('/shopCategory')
+  },
 
-    const allCategories = await userHelpers.getAllCat()
-    const allProducts = await userHelpers.getAllProducts()
-    res.render('user/shopCategory', { user: true, allProducts, userDetails: req.session.user, allCategories })
 
-  } catch (error) {
-    console.log(error);
-    res.redirect('/')
-  }
 
-},
+
 
 //MEN CATEGORY -------------------------------------------------------------------------------------------
   getMenCategory:(req,res)=>{
@@ -141,6 +151,53 @@ getShopCategory: async (req, res) => {
     })
  
   },
+
+//GET CART ------------------------------------------------------------------------------------------------
+
+getCart: async function (req, res, next) {
+  var userDetails = req.session.user
+  let cartCount = null
+  if (userDetails) {
+    
+    let cartCount = await userHelpers.getCartCount(req.session.user._id)
+
+    let products = await userHelpers.getCartProducts(req.session.user._id)
+    if (products.length > 0) {
+      totalValue = await userHelpers.getTotalAmount(req.session.user._id)
+      
+    } else {
+      totalValue = 0
+    }
+    res.render('user/cart', { userDetails, totalValue,  cartCount, user: true, products })
+  } else {
+    res.redirect('/login')
+  }
+},
+
+
+
+//ADD TO CART -----------------------------------------------------------------------------------------------
+getAddToCart: function (req, res) {
+  userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
+    res.json({ status: true })
+
+  })
+
+  // res.redirect('/shopCategory')
+},
+
+//DEL CART PRODUCT ----------------------------------------------------------------------------------------
+
+postdelCartPro: async (req, res) => {
+  try {
+    const response = await userHelpers.delCartPro(req.body)
+    res.json(response)
+  } catch (error) {
+    res.redirect('/')
+  }
+
+
+},
 
 
 
