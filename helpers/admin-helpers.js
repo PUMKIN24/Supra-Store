@@ -1,6 +1,7 @@
 var db = require('../config/connection')
 var collections = require('../config/collections')
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 const objectId = require('mongodb').ObjectId
 const { resolve } = require('path');
 
@@ -86,5 +87,26 @@ resolve()
         let allProducts=await db.get().collection(collections.PRODUCT_COLLECTION).find({}).toArray()
         resolve(allProducts)
     })
-    }
+    },
+
+
+    deleteProduct: (productId) => {
+        return new Promise(async (resolve, reject) => {
+            let images = await db.get().collection(collections.PRODUCT_COLLECTION).findOne({ _id: objectId(productId) }, { images: 1 })
+            console.log(images, "imageeeeeeeeeeeeessss");
+            images = images.images
+            console.log(images.length);
+            if (images.length > 0) {
+                let imageNames = images.map((x) => {
+                    x = `public/product-images/${x}`
+                    return x
+                })
+                imageNames.forEach((element) => {
+                    fs.existsSync(element) && fs.unlinkSync(element)
+                });
+            }
+            db.get().collection(collections.PRODUCT_COLLECTION).deleteOne({ _id: objectId(productId) })
+
+        })
+    },
 }

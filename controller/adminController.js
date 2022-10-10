@@ -86,6 +86,13 @@ module.exports = {
         adminHelpers.getAllProducts().then((products)=>{
           res.render('admin/viewProducts',{layout: 'admin-layout',products,admin: true} )
         })
-      }
+      },
+
+//DELETE PRODUCTS ------------------------------------------------------------------
+
+getDeleteProduct: function (req, res) {
+  adminHelpers.deleteProduct(req.params.id)
+  res.redirect('/admin/viewProducts')
+},
     
 }

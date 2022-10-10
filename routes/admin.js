@@ -44,6 +44,8 @@ router.post('/addProduct',uploads.array("image",3),adminController.postAddProduc
 //VIEW PRODUCTS------------------------------------------------------------
 router.get('/viewProducts',adminController.getViewProducts)
 
+//DELETE  PRODUCTS------------------------------------------------------------
+router.get('/DeleteProduct/:id', adminController.getDeleteProduct)
 
 
 // CATEGORIES--------------------------------------------------------------

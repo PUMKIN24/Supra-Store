@@ -114,6 +114,10 @@ cart count and wishlist count badges added in all pages
 
 delete wishlist products done
 
+delete products done in admin side
+
+
+
 
 
 
