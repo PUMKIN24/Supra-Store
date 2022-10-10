@@ -112,7 +112,7 @@ get wishlist products done
 
 cart count and wishlist count badges added in all pages
 
-
+delete wishlist products done
 
 
 

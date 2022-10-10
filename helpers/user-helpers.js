@@ -443,4 +443,21 @@ getWishlistProducts: (userId) => {
 },
 
 
+delWishlistPro: (details) => {
+    return new Promise((resolve, reject) => {
+        try {
+            db.get().collection(collections.WISHLIST_COLLECTION)
+                .updateOne({ _id: objectId(details.wishlist) },
+                    { $pull: { products: { item: objectId(details.product) } } }).then((response) => {
+
+                        resolve(response)
+                    })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+
 }

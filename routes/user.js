@@ -45,6 +45,7 @@ router.post('/change-product-quantity',userController.postChangeProductQuantity)
 //WISHLIST------------------------------------------------------------------------------------------
 router.get('/addToWishlist/:id', userController.getAddToWishlist)
 router.get('/wishList/:id',userController.getWishlist)
+router.post('/delete-wishlist-product',userController.postDelWishlistPro)
 
 //LOGOUT -----------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)

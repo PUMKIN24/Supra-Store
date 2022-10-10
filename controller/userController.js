@@ -260,6 +260,15 @@ getWishlist: async function (req, res, next) {
   }
 },
 
+postDelWishlistPro: async (req, res) => {
+  try {
+    const response = await userHelpers.delWishlistPro(req.body)
+    res.json(response)
+  } catch (error) {
+    res.redirect('/')
+  }
+},
+
 
 
 
