@@ -95,4 +95,38 @@ getDeleteProduct: function (req, res) {
   res.redirect('/admin/viewProducts')
 },
     
+
+getEditProduct: async (req, res) => {
+  let fullCategories = await adminHelpers.getAllCategories();
+  let productDetails = await adminHelpers.getProductDetails(req.params.id);
+  for (i = 0; i < fullCategories.length; i++) {
+    if (productDetails.Categories == fullCategories[i].category) {
+      fullCategories[i].flag = true;
+    }
+  }
+
+  res.render('admin/editProduct', { layout: 'admin-layout', admin: true, productDetails, fullCategories })
+},
+
+postEditProduct: (req, res) => {
+  let id = req.params.id
+  const editImg = []
+  for (i = 0; i < req.files.length; i++) {
+    editImg[i] = req.files[i].filename
+  }
+  req.body.images = editImg
+  adminHelpers.editedProduct(id, req.body).then((oldImage) => {
+    if (oldImage) {
+      for (i = 0; i < oldImage.length; i++) {
+        var oldImagePath = path.join(__dirname, '../public/admin/product-Images/' + oldImage[i])
+        fs.unlink(oldImagePath, function (err) {
+          if (err)
+            return
+        })
+      }
+    }
+  })
+  res.redirect('/admin/viewProducts')
+},
+
 }

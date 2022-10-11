@@ -109,4 +109,53 @@ resolve()
 
         })
     },
+
+    getAllCategories: () => {
+        return new Promise(async (resolve, reject) => {
+            let allCategories = await db.get().collection(collections.CATEGORY_COLLECTION).find({}).toArray()
+
+            resolve(allCategories)
+        })
+    },
+
+    getProductDetails: (productId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collections.PRODUCT_COLLECTION).findOne({ _id: objectId(productId) }).then((data) => {
+
+                resolve(data)
+            })
+        })
+    },
+
+    editedProduct: (proId, proDetails) => {
+        return new Promise((resolve, reject) => {
+            let oldImage = null
+            db.get().collection(collections.PRODUCT_COLLECTION).findOne({ _id: objectId(proId) }).then((product) => {
+                if (proDetails.images.length == 0) {
+                    proDetails.images = product.images
+                } else {
+                    oldImage = product.Images
+                }
+
+                db.get().collection(collections.PRODUCT_COLLECTION).updateOne({ _id: objectId(proId) }, {
+                    $set: {
+                        Product: proDetails.Product,
+                        Brand: proDetails.Brand,
+                        Categories: proDetails.Categories,
+                        Quantity: proDetails.Quantity,
+                        Price: proDetails.Price,
+                        Discription: proDetails.Discription,
+                        images: proDetails.images
+
+                    }
+                }).then(() => {
+                    resolve(oldImage)
+                })
+            })
+        })
+
+
+
+    },
+
 }

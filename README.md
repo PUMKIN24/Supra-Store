@@ -116,6 +116,8 @@ delete wishlist products done
 
 delete products done in admin side
 
+editing products done
+
 
 
 

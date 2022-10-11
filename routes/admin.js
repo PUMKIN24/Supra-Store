@@ -48,6 +48,10 @@ router.get('/viewProducts',adminController.getViewProducts)
 router.get('/DeleteProduct/:id', adminController.getDeleteProduct)
 
 
+//EDIT  PRODUCTS------------------------------------------------------------
+router.get('/editProduct/:id', adminController.getEditProduct)
+router.post('/editProduct/:id',uploads.array('image',3),adminController.postEditProduct)
+
 // CATEGORIES--------------------------------------------------------------
 router.get('/categories',adminController.getAddCategory)
 router.post('/categories',adminController.addCategory)
