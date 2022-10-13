@@ -118,6 +118,10 @@ delete products done in admin side
 
 editing products done
 
+admin side error page created
+
+admin login and logout verification done
+
 
 
 

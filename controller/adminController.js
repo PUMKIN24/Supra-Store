@@ -129,4 +129,18 @@ postEditProduct: (req, res) => {
   res.redirect('/admin/viewProducts')
 },
 
+
+
+logout: (req, res, next) => {
+  try {
+    req.session.adminLoggedIn = false
+    req.session.admin = null
+    res.redirect('/admin')
+  } catch (error) {
+    console.log(error, "logout");
+    next(error)
+  }
+}
+
+
 }
