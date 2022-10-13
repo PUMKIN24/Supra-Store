@@ -83,6 +83,22 @@ postOtp: (req, res, next) => {
   res.render('user/profile', { user: true, userDetails ,wishlistCount,cartCount})
 }},
 
+
+
+postAddAddress: (req, res, next) => {
+  try {
+
+    var userId = req.params.id
+    let address = req.body
+    userHelpers.postAddAddress(userId, address)
+    res.redirect('/profile')
+  } catch (error) {
+    console.log(error, "postAddAddress");
+    next(error)
+  }
+},
+
+
 //PRODUCT DETAILS ---------------------------------------------------------------------------------------------------------
 getProductDetails: async (req,res)=>{
   const userDetails = req.session.user
@@ -272,10 +288,12 @@ postDelWishlistPro: async (req, res) => {
 
 
 
+
+
 //LOGOUT -------------------------------------------------------------------------------------------
 getLogout: function (req, res) {
   req.session.loggedIn = false
   req.session.user = null
   res.redirect('/signUp ')
-},
+}
 }

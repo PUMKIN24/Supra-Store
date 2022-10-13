@@ -21,6 +21,7 @@ router.get('/', userController.getHomepage)
 
 //PROFILE ----------------------------------------------------------------------------------
 router.get('/profile', userController.getProfile)
+router.post('/addAddress/:id',userController.postAddAddress)
 
 //SHOP ----------------------------------------------------------------------------------------
 router.get('/shopCategory', userController.getShopCategory)

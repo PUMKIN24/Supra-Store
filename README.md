@@ -122,6 +122,8 @@ admin side error page created
 
 admin login and logout verification done
 
+user profile management - adding address
+
 
 
 

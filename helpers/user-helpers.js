@@ -254,9 +254,7 @@ postProTotal: async (userId, proId) => {
 
                 },
 
-                // {
-                //     $match:{product:{_id:objectId(proId)}}
-                // }
+                
                 {
                     $match: { "product._id": objectId(proId) }
                 },
@@ -456,8 +454,55 @@ delWishlistPro: (details) => {
             reject(error)
         }
     })
-}
+},
 
+//--------------------------------------------------------------------------------------------------
+
+postAddAddress: (userId, address) => {
+    create_random_id(15)
+    function create_random_id(string_length) {
+        var randomString = '';
+        var numbers = '123456789'
+        for (var i = 0; i < string_length; i++) {
+            randomString += numbers.charAt(Math.floor(Math.random() * numbers.length))
+        }
+        address.addId = "add" + randomString
+    }
+
+    let addressObj = {
+        addId: address.addId,
+        name: address.name,
+        phone: address.phone,
+        building_Name: address.building_Name,
+        street_name: address.street_name,
+        city: address.city,
+        district: address.district,
+        state: address.state,
+        pincode: address.pincode
+    }
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let userDetail = await db.get().collection(collections.USER_COLLECTION).findOne({ _id: objectId(userId) })
+            console.log(userDetail.address, "lll");
+            if (userDetail.address) {
+
+                db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) },
+                    {
+                        $push: { address: addressObj }
+                    })
+            } else {
+                let address = [addressObj]
+                db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { address: address } })
+                resolve()
+            }
+
+        } catch (error) {
+            reject(error)
+        }
+
+    })
+},
 
 
 }
