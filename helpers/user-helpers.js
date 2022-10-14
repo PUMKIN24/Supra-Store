@@ -495,6 +495,7 @@ postAddAddress: (userId, address) => {
                 let address = [addressObj]
                 db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { address: address } })
                 resolve()
+                console.log(address, 'endddddddddddddddddd')
             }
 
         } catch (error) {
@@ -503,6 +504,19 @@ postAddAddress: (userId, address) => {
 
     })
 },
+
+postChangePassword: (newPassword, userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const hashedNewPassword = await bcrypt.hash(newPassword, 10)
+
+            db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { password: hashedNewPassword } })
+            resolve()
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 
 }

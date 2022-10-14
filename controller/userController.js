@@ -90,6 +90,7 @@ postAddAddress: (req, res, next) => {
 
     var userId = req.params.id
     let address = req.body
+    console.log(address )
     userHelpers.postAddAddress(userId, address)
     res.redirect('/profile')
   } catch (error) {
@@ -97,6 +98,34 @@ postAddAddress: (req, res, next) => {
     next(error)
   }
 },
+
+changePassword: (req, res, next) => {
+  try {
+    const newPassword = req.body.newPassword
+    let userId = req.session.user._id
+    userHelpers.postChangePassword(newPassword, userId)
+    res.redirect('/profile')
+
+  } catch (error) {
+    console.log(error, "changePassword");
+    next(error)
+  }
+},
+
+
+
+
+getOrderPlaced: async (req, res, next) => {
+  try {
+    var cartCount = await userHelpers.getCartCount(req.session.user._id)
+    let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    res.render('user/orderSuccess', { user: true, wishlistCount, cartCount, userDetails: req.session.user })
+  } catch (error) {
+    console.log(error, "getOrderPlaced");
+    next(error)
+  }
+},
+
 
 
 //PRODUCT DETAILS ---------------------------------------------------------------------------------------------------------

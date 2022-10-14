@@ -21,7 +21,9 @@ router.get('/', userController.getHomepage)
 
 //PROFILE ----------------------------------------------------------------------------------
 router.get('/profile', userController.getProfile)
+router.post('/changePassword/:id',userController.changePassword)
 router.post('/addAddress/:id',userController.postAddAddress)
+
 
 //SHOP ----------------------------------------------------------------------------------------
 router.get('/shopCategory', userController.getShopCategory)
@@ -47,6 +49,9 @@ router.post('/change-product-quantity',userController.postChangeProductQuantity)
 router.get('/addToWishlist/:id', userController.getAddToWishlist)
 router.get('/wishList/:id',userController.getWishlist)
 router.post('/delete-wishlist-product',userController.postDelWishlistPro)
+
+//ORDER -------------------------------------------------------------------------------------------
+router.get('/orderPlaced', userController.getOrderPlaced)
 
 //LOGOUT -----------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)

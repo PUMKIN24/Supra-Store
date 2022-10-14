@@ -124,6 +124,8 @@ admin login and logout verification done
 
 user profile management - adding address
 
+user profile management - edit password 
+
 
 
 
