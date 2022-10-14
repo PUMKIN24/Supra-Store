@@ -113,8 +113,28 @@ changePassword: (req, res, next) => {
 },
 
 
+postEditProfile: function (req, res, next) {
+  try {
+
+    var userId = req.params.id
+    editedProfileDetails = req.body
+    userHelpers.postEditProfile(userId, editedProfileDetails).then(() => {
+      req.session.user.username = editedProfileDetails.name
+      res.redirect('/profile')
+
+    }).catch((error) => {
+      console.log(error, "postEditProfile");
+      next(error)
+    })
+  } catch (error) {
+    console.log(error, "postEditProfile");
+    next(error)
+  }
+},
 
 
+
+//-------------------------------------------------------------------------------------------------
 getOrderPlaced: async (req, res, next) => {
   try {
     var cartCount = await userHelpers.getCartCount(req.session.user._id)

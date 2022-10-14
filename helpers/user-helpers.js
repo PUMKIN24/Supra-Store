@@ -505,18 +505,38 @@ postAddAddress: (userId, address) => {
     })
 },
 
-postChangePassword: (newPassword, userId) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const hashedNewPassword = await bcrypt.hash(newPassword, 10)
+    postChangePassword: (newPassword, userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const hashedNewPassword = await bcrypt.hash(newPassword, 10)
 
-            db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { password: hashedNewPassword } })
-            resolve()
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
+                db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) }, { $set: { password: hashedNewPassword } })
+                resolve()
+            } catch (error) {
+                reject(error)
+            }
+        })
+    },
+
+    postEditProfile: (userId, editedUserDetails) => {
+        return new Promise((resolve, reject) => {
+            try {
+                db.get().collection(collections.USER_COLLECTION).updateOne({
+                    _id: objectId(userId)
+                }, {
+                    $set: {
+                        username: editedUserDetails.name
+                    }
+                }).then(() => {
+                    resolve()
+                }).catch((error) => {
+                        reject(error)
+                    })
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
 
 
 }

@@ -126,6 +126,8 @@ user profile management - adding address
 
 user profile management - edit password 
 
+user profile management - edit profile
+
 
 
 

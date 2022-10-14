@@ -22,6 +22,7 @@ router.get('/', userController.getHomepage)
 //PROFILE ----------------------------------------------------------------------------------
 router.get('/profile', userController.getProfile)
 router.post('/changePassword/:id',userController.changePassword)
+router.post('/editProfile/:id',userController.postEditProfile)
 router.post('/addAddress/:id',userController.postAddAddress)
 
 
