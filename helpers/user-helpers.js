@@ -505,6 +505,11 @@ postAddAddress: (userId, address) => {
     })
 },
 
+
+
+
+
+
     postChangePassword: (newPassword, userId) => {
         return new Promise(async (resolve, reject) => {
             try {

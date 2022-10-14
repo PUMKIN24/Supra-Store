@@ -26,11 +26,12 @@ router.post('/editProfile/:id',userController.postEditProfile)
 router.post('/addAddress/:id',userController.postAddAddress)
 
 
+
 //SHOP ----------------------------------------------------------------------------------------
 router.get('/shopCategory', userController.getShopCategory)
 router.get('/shopALL',userController.shopALL)
 
-//MEN WOMEN KIDS UNISEX CATEGORY --------------------------------------------------------------
+//CATEGORY --------------------------------------------------------------
 router.get('/menCategory', userController.getMenCategory)
 router.get('/womenCategory',userController.getWomenCategory)
 router.get('/unisexCategory',userController.getUnisexCategory)
@@ -50,6 +51,9 @@ router.post('/change-product-quantity',userController.postChangeProductQuantity)
 router.get('/addToWishlist/:id', userController.getAddToWishlist)
 router.get('/wishList/:id',userController.getWishlist)
 router.post('/delete-wishlist-product',userController.postDelWishlistPro)
+
+//CHECKOUT-----------------------------------------------------------------------------------------
+router.get('/place-order',userController.getCheckOut)
 
 //ORDER -------------------------------------------------------------------------------------------
 router.get('/orderPlaced', userController.getOrderPlaced)

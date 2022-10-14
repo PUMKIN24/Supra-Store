@@ -134,6 +134,28 @@ postEditProfile: function (req, res, next) {
 
 
 
+//---------------------------------------------------------------------------------------------------
+
+getCheckOut: async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
+
+      let products = await userHelpers.getCartProducts(req.session.user._id)
+      var cartCount = await userHelpers.getCartCount(req.session.user._id)
+      res.render('user/checkout', { totalValue, user: true, wishlistCount, products, cartCount, userDetails: req.session.user })
+    }
+
+  } catch (error) {
+    console.log(error, "getCheckOut");
+    next(error)
+  }
+},
+
+
+
+
 //-------------------------------------------------------------------------------------------------
 getOrderPlaced: async (req, res, next) => {
   try {

@@ -128,6 +128,8 @@ user profile management - edit password
 
 user profile management - edit profile
 
+checkout page added
+
 
 
 
