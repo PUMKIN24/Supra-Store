@@ -132,6 +132,20 @@ postEditProfile: function (req, res, next) {
   }
 },
 
+postDeleteAddress: (req,res,next) => {
+  try {
+    let userId = req.body.user
+    let addressId = req.body.addressId
+    let response = userHelpers.postDeleteAddress(userId, addressId)
+    res.json(response)
+    res.redirect('/profile')
+
+  } catch (error) {
+    console.log(error, "postDeleteAddress");
+    next(error)
+  }
+},
+
 
 
 //---------------------------------------------------------------------------------------------------
@@ -167,6 +181,7 @@ getOrderPlaced: async (req, res, next) => {
     next(error)
   }
 },
+
 
 
 

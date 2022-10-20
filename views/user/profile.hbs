@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    {{#each userAddress}}
+                    {{#each userDetails.address}}
                     <div class="col-md-6">
                         <div class="card mb-4 mb-md-0">
                             <div class="card-body">
@@ -125,7 +125,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -191,7 +191,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -258,7 +258,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -317,75 +317,24 @@
         </div>
     </div>
 
-    <script>
 
 
- function currentAddress(userId, addressId) {
-            $.ajax({
-                url: '/currentAddress',
-                data: {
-                    user: userId,
-                    addressId: addressId
-                },
-                method: 'post',
-                success: (response) => {
-                    document.getElementById('name').value = response.name
-                    document.getElementById('phone').value = response.phone
-                    document.getElementById('building_Name').value = response.building_Name
-                    document.getElementById('street_name').value = response.street_name
-                    document.getElementById('district').value = response.district
-                    document.getElementById('state').value = response.state
-                    document.getElementById('pincode').value = response.pincode
-                    document.getElementById('city').value = response.city
-                    document.getElementById('addressId').value = response.addId
-                }
-            })
-        }
-        $("#editaddress-form").submit((e) => {
-            e.preventDefault()
-            $.ajax({
-                url: '/editaddress',
-                method: 'post',
-                data: $('#editaddress-form').serialize(),
-                success: ((response) => {
-                    if (response) {
-                        Swal.fire('address edited', 'success')
-                        setTimeout(() => {
+<script>
+  function deleteAddress(userId, addressId) {
+
+                    $.ajax({
+                        url: '/deleteAddress',
+                        data: {
+                            user: userId,
+                            addressId: addressId
+                        },
+                        method: 'post',
+                        success: (response) => {
+                           alert('Address Deleted')
                             location.reload()
-                        }, 500)
-                    }
-                })
-            })
-        })
-            $("#add_Address").validate({
-                rules: {
-                    name: {
-                        required: true, minlength: 3
-                    },
-                    phone: {
-                        required: true, minlength: 10
-                    },
-                    building_Name: {
-                        required: true, minlength: 3
-                    },
-                    street_name: {
-                        required: true, minlength: 3
-                    },
-                    city: {
-                        required: true, minlength: 3
-                    },
-                    district: {
-                        required: true, minlength: 3
-                    },
-                    state: {
-                        required: true, minlength: 3
-                    },
-                    pincode: {
-                        required: true, minlength: 6
-                    }
+                        }
+                    })
                 }
-            })
-      
-    </script>
-    
+            
+</script>
 </section>

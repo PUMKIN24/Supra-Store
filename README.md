@@ -130,6 +130,8 @@ user profile management - edit profile
 
 checkout page added
 
+delete address in profile added
+
 
 
 

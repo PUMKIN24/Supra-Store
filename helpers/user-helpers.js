@@ -541,7 +541,29 @@ postAddAddress: (userId, address) => {
                 reject(error)
             }
         })
-    }
+    },
+
+
+    
+    postDeleteAddress: (userId, addressId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(userId) },
+                    { $pull: { address: { addId: addressId } } })
+                    .then((response) => {
+                        resolve(response)
+                    }).catch((error) => {
+                        reject(error)
+                    })
+            } catch (error) {
+                reject(error)
+            }
+
+        })
+    },
+
+//-------------------------------------------------------------------------------------------------
+
 
 
 }

@@ -24,6 +24,8 @@ router.get('/profile', userController.getProfile)
 router.post('/changePassword/:id',userController.changePassword)
 router.post('/editProfile/:id',userController.postEditProfile)
 router.post('/addAddress/:id',userController.postAddAddress)
+router.post('/deleteAddress',userController.postDeleteAddress)
+
 
 
 
@@ -55,8 +57,11 @@ router.post('/delete-wishlist-product',userController.postDelWishlistPro)
 //CHECKOUT-----------------------------------------------------------------------------------------
 router.get('/place-order',userController.getCheckOut)
 
+
+
 //ORDER -------------------------------------------------------------------------------------------
 router.get('/orderPlaced', userController.getOrderPlaced)
+
 
 //LOGOUT -----------------------------------------------------------------------------------------
 router.get('/logout', userController.getLogout)
