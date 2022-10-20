@@ -562,6 +562,51 @@ postAddAddress: (userId, address) => {
         })
     },
 
+
+    postEditAddress: (editedAddress) => {
+        return new Promise((resolve, reject) => {
+            try {
+                db.get().collection(collections.USER_COLLECTION).updateOne({ _id: objectId(editedAddress.userId), 'address.addId': editedAddress.addressId },
+                    {
+                        $set: {
+                            "address.$.name": editedAddress.name,
+                            "address.$.phone": editedAddress.phone,
+                            "address.$.building_Name": editedAddress.building_Name,
+                            "address.$.street_name": editedAddress.street_name,
+                            "address.$.city": editedAddress.city,
+                            "address.$.district": editedAddress.district,
+                            "address.$.state": editedAddress.state,
+                            "address.$.pincode": editedAddress.pincode
+                        }
+                    }).then((response) => {
+                        resolve(response)
+                    }).catch((error) => {
+                        reject(error)
+                    })
+
+            } catch (error) {
+                reject(error)
+            }
+
+        })
+
+    },
+
+
+    postCurrentAddress: (userId, addressId) => {
+        return new Promise(async (resolve, response) => {
+            try {
+                let currentAddress = await db.get().collection(collections.USER_COLLECTION).aggregate([
+                    { $match: { _id: objectId(userId) } },
+                    { $unwind: '$address' },
+                    { $match: { 'address.addId': addressId } }
+                ]).toArray()
+                resolve(currentAddress[0].address)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
 //-------------------------------------------------------------------------------------------------
 
 

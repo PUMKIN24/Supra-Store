@@ -141,9 +141,19 @@ postDeleteAddress: (req,res,next) => {
     res.redirect('/profile')
 
   } catch (error) {
-    console.log(error, "postDeleteAddress");
     next(error)
   }
+},
+
+postEditAddress: (req, res, next) => {
+  userHelpers.postEditAddress(req.body).then((response) => {
+    console.log(response)
+    res.json(response)
+  }).catch((error) => {
+    console.log(error, "posteditaddress");
+    next(error)
+  })
+
 },
 
 
@@ -169,7 +179,19 @@ getCheckOut: async (req, res, next) => {
 
 
 
+currentAddress: async (req, res, next) => {
+  try {
+    let userId = req.body.user
+    let addressId = req.body.addressId
+    let response = await userHelpers.postCurrentAddress(userId, addressId)
+    res.json(response)
+  } catch (error) {
+    console.log(error, "CurrentAddress");
+    next(error)
+  }
 
+
+},
 //-------------------------------------------------------------------------------------------------
 getOrderPlaced: async (req, res, next) => {
   try {

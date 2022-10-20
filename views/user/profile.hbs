@@ -335,6 +335,44 @@
                         }
                     })
                 }
+
+                  $("#editaddress-form").submit((e) => {
+            e.preventDefault()
+            $.ajax({
+                url: '/editAddress',
+                method: 'post',
+                data: $('#editaddress-form').serialize(),
+                success: ((response) => {
+                    if (response) {
+                        alert('address edited')
+                         location.reload()
+                        
+                    }
+                })
+            })
+        })
+
+          function currentAddress(userId, addressId) {
+            $.ajax({
+                url: '/currentAddress',
+                data: {
+                    user: userId,
+                    addressId: addressId
+                },
+                method: 'post',
+                success: (response) => {
+                    document.getElementById('name').value = response.name
+                    document.getElementById('phone').value = response.phone
+                    document.getElementById('building_Name').value = response.building_Name
+                    document.getElementById('street_name').value = response.street_name
+                    document.getElementById('district').value = response.district
+                    document.getElementById('state').value = response.state
+                    document.getElementById('pincode').value = response.pincode
+                    document.getElementById('city').value = response.city
+                    document.getElementById('addressId').value = response.addId
+                }
+            })
+        }
             
 </script>
 </section>
