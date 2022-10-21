@@ -142,6 +142,8 @@ COD added to checkout page
 
 orders page created
 
+view ordered products done
+
 
 
 

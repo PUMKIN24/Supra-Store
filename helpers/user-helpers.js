@@ -687,7 +687,62 @@ getUserOrders: (userId) => {
             reject(error)
         }
     })
-}
+},
+
+getUserSpecificOrders: (orderId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let orders = await db.get().collection(collections.ORDER_COLLECTION).find({ _id: objectId(orderId) }).toArray()
+            resolve(orders[0])
+        } catch (error) {
+            reject(error)
+        }
+    })
+},
+
+getOrderProducts: (orderId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let products = await db.get().collection(collections.ORDER_COLLECTION).aggregate([
+                { $match: { _id: objectId(orderId) } },
+                { $unwind: '$products' },
+                {
+                    $project: {
+                        item: '$products.item',
+                        quantity: '$products.quantity'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: collections.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                    }
+                },
+                {
+                    $project: {
+                        item: '$item',
+                        quantity: '$quantity',
+                        product: '$product',
+                        proTotal: { $multiply: ['$quantity', { $toInt: '$product.Price' }] }
+                    }
+
+                }
+            ]).toArray()
+            console.log(products, "llkklklkkkkkk");
+            resolve(products)
+        } catch (error) {
+            reject(error)
+        }
+
+    })
+},
 
 
 }

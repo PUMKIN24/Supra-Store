@@ -445,9 +445,10 @@ getViewOrders: async (req, res, next) => {
     if (req.session.user._id) {
       cartCount = await userHelpers.getCartCount(req.session.user._id)
       wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      totalValue = await userHelpers.getTotalAmount(req.session.user._id)
     }
     userHelpers.getUserOrders(req.session.user._id).then((orders) => {
-      res.render('user/orders', { user: true, wishlistCount, orders, cartCount, userDetails: req.session.user })
+      res.render('user/orders', { user: true, wishlistCount,totalValue, orders, cartCount, userDetails: req.session.user })
     }).catch((error) => {
       console.log(error, "getUserOrders");
       next(error)
@@ -458,7 +459,25 @@ getViewOrders: async (req, res, next) => {
   }
 },
 
+getViewProducts: async (req, res, next) => {
+  try {
+    let orderId = req.params.id
+    var cartCount = await userHelpers.getCartCount(req.session.user._id)
+    let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    let orders = await userHelpers.getUserSpecificOrders(orderId)
+    let totalOrderAmount = orders.total
+    userHelpers.getOrderProducts(orderId).then((products) => {
+      res.render('user/viewOrderedProducts', { user: true, wishlistCount, products, totalOrderAmount, cartCount, userDetails: req.session.user })
 
+    }).catch((error)=>{
+      console.log(error,"getOrderProducts");
+      next(error)
+    })
+  } catch (error) {
+    console.log(error, "getViewproducts");
+    next(error)
+  }
+},
 
 
 

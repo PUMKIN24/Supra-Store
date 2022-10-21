@@ -66,7 +66,7 @@ router.post('/place-order',userController.postCheckout)
 //ORDER -------------------------------------------------------------------------------------------
 router.get('/orderPlaced', userController.getOrderPlaced)
 router.get('/orders',userController.getViewOrders)
-
+router.get('/viewProducts/:id',userController.getViewProducts)
 
 
 //LOGOUT -----------------------------------------------------------------------------------------
