@@ -140,6 +140,8 @@ user profile management - delivery address
 
 COD added to checkout page
 
+orders page created
+
 
 
 

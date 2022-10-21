@@ -436,6 +436,29 @@ postDelWishlistPro: async (req, res) => {
   }
 },
 
+//ORDERS---------------------------------------------------------------------------------------------------
+
+getViewOrders: async (req, res, next) => {
+  try {
+    let cartCount = null
+    let wishlistCount = null
+    if (req.session.user._id) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id)
+      wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+    }
+    userHelpers.getUserOrders(req.session.user._id).then((orders) => {
+      res.render('user/orders', { user: true, wishlistCount, orders, cartCount, userDetails: req.session.user })
+    }).catch((error) => {
+      console.log(error, "getUserOrders");
+      next(error)
+    })
+  } catch (error) {
+    console.log(error, "getviewOrders");
+    next(error)
+  }
+},
+
+
 
 
 

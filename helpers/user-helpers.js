@@ -675,10 +675,19 @@ postAddAddress: (userId, address) => {
                 reject(error)
             }
         })
-    }
+    },
 
 //-------------------------------------------------------------------------------------------------
-
+getUserOrders: (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let orders = await db.get().collection(collections.ORDER_COLLECTION).find({ userId: objectId(userId) }).toArray()
+            resolve(orders)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 
 }

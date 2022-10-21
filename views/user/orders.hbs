@@ -1,0 +1,81 @@
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Pincode</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">Total</th>
+                            
+                            
+                            <th scope="col">Payment</th>
+                            <th scope="col">status</th>
+                            
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {{#each orders}}
+                        <tr>
+                            {{!-- {{#each this.product}} when it was array --}}
+                            <td>
+                                {{!-- <h5>{{isoToDate this.date}}</h5> --}}
+                            </td>
+                            <td>
+                                <h5>{{this.deliveryDetails.BuidlingName}},{{this.deliveryDetails.StreetName}}</h5>
+                            </td>
+                            {{!-- {{/each}} --}}
+                            <td>
+                                <h5>{{this.deliveryDetails.Pincode}}</h5>
+                            </td>
+                            <td>
+                                {{this.deliveryDetails.Mobile}}
+                            </td>
+                            <td>
+                                <h5>{{this.total}}
+                            </td>
+                             
+                             
+                            <td>
+                                <h5>{{this.Paymentmethod}}</h5>
+
+                            </td>
+                            <td>
+                                <h5>{{this.status}}</h5>
+                            </td>
+                            <td>
+                               
+                                <a href="/shopCategory" class="btn  btn-info" style="width: 80px;">shop</a>
+                                
+                                </td>
+                            <td>
+                                <a href="/viewProducts/{{this._id}}" class="btn btn-info">view Products</a>
+                            </td>
+
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
