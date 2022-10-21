@@ -219,6 +219,58 @@ delCartPro: (details) => {
 },
 
 
+getCartProductList: (userId) => {
+    console.log(userId);
+    return new Promise(async (resolve, reject) => {
+        try {
+            let cart = await db.get().collection(collections.CART_COLLECTION).findOne({ user: objectId(userId) })
+            console.log(cart);
+            resolve(cart.products)
+        } catch (error) {
+            reject(error)
+        }
+    })
+
+},
+
+placeOrder: (order, products, couponName, total) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let status = order['Payment-method'] === 'COD' ? 'placed' : 'pending'
+            let Total = parseInt(order.Total)
+            let orderObj = {
+                deliveryDetails: {
+                    Mobile: order.Phone,
+                    Pincode: order.Pincode,
+                    State: order.State,
+                    District: order.District,
+                    StreetName: order.Street_Name,
+                    BuidlingName: order.Buidling_Name
+
+                },
+                userId: objectId(order.userId),
+                Paymentmethod: order['Payment-method'],
+                products: products,
+                totalAmount: order.total,
+                status: status
+                }
+            let users = [objectId(order.userId)]
+           
+            db.get().collection(collections.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
+
+                db.get().collection(collections.CART_COLLECTION).deleteOne({ user: objectId(order.userId) })
+                resolve(response.insertedId)
+            }).catch((error) => {
+                reject(error)
+            })
+        } catch (error) {
+            reject(error)
+        }
+
+    })
+},
+
+
 //---------------------------------------------------------------------------------------------------------------------------
 postProTotal: async (userId, proId) => {
     console.log(proId, 'proId');
@@ -318,7 +370,7 @@ getTotalAmount: (userId) => {
 
 
             ]).toArray()
-            console.log(total[0], total[0].total, 'jerrry');
+            console.log(total[0], total[0].total);
             resolve(total[0])
 
         } catch (error) {

@@ -160,22 +160,6 @@ postEditAddress: (req, res, next) => {
 
 //---------------------------------------------------------------------------------------------------
 
-getCheckOut: async (req, res, next) => {
-  try {
-    if (req.session.user) {
-      let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
-      let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
-
-      let products = await userHelpers.getCartProducts(req.session.user._id)
-      var cartCount = await userHelpers.getCartCount(req.session.user._id)
-      res.render('user/checkout', { totalValue, user: true, wishlistCount, products, cartCount, userDetails: req.session.user })
-    }
-
-  } catch (error) {
-    console.log(error, "getCheckOut");
-    next(error)
-  }
-},
 
 
 
@@ -217,6 +201,51 @@ getOrderPlaced: async (req, res, next) => {
     next(error)
   }
 },
+
+getCheckOut: async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
+      let totalValue = await userHelpers.getTotalAmount(req.session.user._id)
+
+      let products = await userHelpers.getCartProducts(req.session.user._id)
+      var cartCount = await userHelpers.getCartCount(req.session.user._id)
+      res.render('user/checkout', { totalValue, user: true, wishlistCount, products, cartCount, userDetails: req.session.user })
+    }
+
+  } catch (error) {
+    console.log(error, "getCheckOut");
+    next(error)
+  }
+},
+
+postCheckout: async (req, res, next) => {
+  try {
+   
+    let order = req.body
+    products = await userHelpers.getCartProductList(req.body.userId)
+    totalPrice = await userHelpers.getTotalAmount(req.body.userId)
+    
+
+    userHelpers.placeOrder(order, products,  totalPrice).then((orderId) => {
+      if (req.body['Payment-method'] === 'COD') {
+        res.json({ codSuccess: true })
+      } else {
+        console.log('razorPay')
+        .catch((error) => {
+          console.log(error, "generateRazorPay");
+          error.error = true
+          res.json(error)
+        })
+      }
+    })
+
+  } catch (error) {
+    console.log(error, "postCheckout");
+    next(error)
+  }
+},
+
 
 
 

@@ -1,4 +1,7 @@
 
+
+
+
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
         <div class="container">
@@ -18,10 +21,7 @@
     <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
         <div class="container">
-            <div class="cupon_area">
-                <input type="text" id="couponCode" value="" placeholder="Enter coupon code">
-                <button class="tp_btn" onclick="applyCoupon()">Apply Coupon</button>
-            </div>
+            
             <div class="billing_details">
                 <form class="row contact_form" action="" method="" id="checkout-form">
                     <div class="row">
@@ -105,15 +105,15 @@
                                     {{#each products}}
                                     <li><a href="#"> <span class="middle">{{this.product.Brand}} x
                                                 {{this.quantity}}</span>
-                                            <span class="last">Rs.{{this.proTotal}}</span></a></li>
+                                            <span class="last">${{this.proTotal}}</span></a></li>
                                     {{/each }}
                                 </ul>
                                 <ul class="list list_2">
-                                    <li><a href="#"> Coupon applied<span id="couponNames">Nil</span></a></li>
-                                    <li><a href="#"> Discount <span id="discount">0</span></a></li>
-                                    <li><a href="#">Sub Total <span id="subTotal">{{totalValue.total}}</span></a></li>
-                                    <li><a href="#">Grand Total <span id="GrandTotal">{{totalValue.total}}</span></a>
-                                    </li>
+                                    
+                                    
+                                    <li><a href="#">Total <span id="subTotal">${{totalValue.total}}</span></a></li>
+                                    
+                                    
 
                                 </ul>
                                 <div class="payment_item">
@@ -141,17 +141,15 @@
             </div>
             <div class="col-lg-8">
                 <div class="row">
-                    {{#each userAddress}}
+                    {{#each userDetails}}
                     <div class="col-md-4">
                         <div class="card mb-4 mb-md-0">
                             <div class="card-body">
-                                <p class="mb-4"><span class="font-weight-bold">name :</span> {{this.name}}
+                                <p class="mb-4"><span class="font-weight-bold">name :</span> {{this.Name}}
                                 </p>
                                 <p class="mb-4"><span class="font-weight-bold">phone :</span> {{this.phone}}
                                 </p>
-                                {{!-- <p class="mb-4"><span class="font-weight-bold">email:</span>
-                                    {{../userDetails.email}}
-                                </p> --}}
+                               
                                 <p class="mb-4">
                                     <span class="font-weight-bold">Address :</span>
                                     {{this.building_Name}},{{this.street_name}},{{this.state}}
@@ -172,5 +170,54 @@
 
         </div>
     </section>
-    <!--================End Checkout Area =================-->
+
     <script>
+
+    function deliveryAddress(userId, addressId) {
+            $.ajax({
+                url: '/deliveryAddress',
+                data: {
+                    user: userId,
+                    addressId: addressId
+                },
+                method: 'post',
+                success: (response) => {
+                    alert("currentAddress added ")
+                    document.getElementById('name').value = response.name
+                    document.getElementById('phone').value = response.phone
+                    document.getElementById('building_Name').value = response.building_Name
+                    document.getElementById('street_name').value = response.street_name
+                    document.getElementById('city').value = response.city
+                    document.getElementById('district').value = response.district
+                    document.getElementById('state').value = response.state
+                    document.getElementById('pincode').value = response.pincode
+                    document.getElementById('addressId').value = response.addId
+                }
+            })
+        }
+
+          $("#checkout-form").submit((e) => {
+            e.preventDefault()
+            $.ajax({
+                url: '/place-order',
+                method: 'post',
+                data: $('#checkout-form').serialize(),
+                success: ((response) => {
+                    alert('ORDER COMPLETED')
+                    if (response.codSuccess) {
+                       
+                        location.href = '/orderPlaced'
+                    } else if (response.error) {
+                        
+                        alert("payment incomplete")
+                        location.replace("/")
+                    }
+                    else {
+                        console.log("razorPayPayment")
+                       
+                    }
+                })
+            })
+        })
+
+        </script>

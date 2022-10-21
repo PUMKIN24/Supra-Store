@@ -59,6 +59,7 @@ router.post('/delete-wishlist-product',userController.postDelWishlistPro)
 
 //CHECKOUT-----------------------------------------------------------------------------------------
 router.get('/place-order',userController.getCheckOut)
+router.post('/place-order',userController.postCheckout)
 
 
 
