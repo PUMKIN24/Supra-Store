@@ -27,6 +27,7 @@ router.post('/addAddress/:id',userController.postAddAddress)
 router.post('/deleteAddress',userController.postDeleteAddress)
 router.post('/editAddress',userController.postEditAddress)
 router.post('/currentAddress',userController.currentAddress)
+router.post('/deliveryAddress',userController.getDeliveryAddress)
 
 
 

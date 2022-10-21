@@ -136,6 +136,8 @@ user profile management - edit address
 
 user profile management - current address
 
+user profile management - delivery address
+
 
 
 

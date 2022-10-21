@@ -192,6 +192,20 @@ currentAddress: async (req, res, next) => {
 
 
 },
+
+
+getDeliveryAddress: async (req, res, next) => {
+  try {
+    let userId = req.body.user
+    let addressId = req.body.addressId
+    let response = await userHelpers.getDeliveryAddress(userId, addressId)
+    res.json(response)
+  } catch (error) {
+    console.log(error, "getDeliveryAddress");
+    next(error)
+  }
+
+},
 //-------------------------------------------------------------------------------------------------
 getOrderPlaced: async (req, res, next) => {
   try {

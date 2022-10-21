@@ -606,7 +606,25 @@ postAddAddress: (userId, address) => {
                 reject(error)
             }
         })
+    },
+
+
+    getDeliveryAddress: (userId, addressId) => {
+        return new Promise(async (resolve, response) => {
+            try {
+                let currentAddress = await db.get().collection(collections.USER_COLLECTION).aggregate([
+                    { $match: { _id: objectId(userId) } },
+                    { $unwind: '$address' },
+                    { $match: { 'address.addId': addressId } }
+
+                ]).toArray()
+                resolve(currentAddress[0].address)
+            } catch (error) {
+                reject(error)
+            }
+        })
     }
+
 //-------------------------------------------------------------------------------------------------
 
 
