@@ -11,6 +11,7 @@ module.exports = {
     doLogin: (adminData) => {
 
         return new Promise(async (resolve, reject) => {
+            console.log(adminData)
             let admin = await db.get().collection(collections.ADMIN_COLLECTION).findOne({ username: adminData.name })
 
             if (admin) {
@@ -156,6 +157,6 @@ resolve()
 
 
 
-    },
+    }
 
 }

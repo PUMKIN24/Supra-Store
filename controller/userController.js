@@ -218,22 +218,23 @@ getCheckOut: async (req, res, next) => {
     next(error)
   }
 },
-
 postCheckout: async (req, res, next) => {
   try {
-   
+    
     let order = req.body
     products = await userHelpers.getCartProductList(req.body.userId)
     totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-    
+    let Total = order.Total
+    Total = parseInt(Total)
 
-    userHelpers.placeOrder(order, products,  totalPrice).then((orderId) => {
+    userHelpers.placeOrder(order, products, totalPrice).then((orderId) => {
       if (req.body['Payment-method'] === 'COD') {
         res.json({ codSuccess: true })
       } else {
-        console.log('razorPay')
-        .catch((error) => {
-          console.log(error, "generateRazorPay");
+        userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
+          res.json(response)
+        }).catch((error) => {
+          console.log(error, "generateRazorpay");
           error.error = true
           res.json(error)
         })
@@ -244,6 +245,18 @@ postCheckout: async (req, res, next) => {
     console.log(error, "postCheckout");
     next(error)
   }
+},
+
+
+postVerifyPayment: (req, res, next) => {
+  userHelpers.postVerifyPayment(req.body).then(() => {
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
+      res.json({ status: true })
+    })
+  }).catch((err) => {
+    console.log(err, "postVerifyPayment");
+    res.json({ status: false, errMsg: "" })
+  })
 },
 
 
@@ -465,9 +478,11 @@ getViewProducts: async (req, res, next) => {
     var cartCount = await userHelpers.getCartCount(req.session.user._id)
     let wishlistCount = await userHelpers.getWishlistCount(req.session.user._id)
     let orders = await userHelpers.getUserSpecificOrders(orderId)
+    totalValue = await userHelpers.getTotalAmount(req.session.user._id)
     let totalOrderAmount = orders.total
+    
     userHelpers.getOrderProducts(orderId).then((products) => {
-      res.render('user/viewOrderedProducts', { user: true, wishlistCount, products, totalOrderAmount, cartCount, userDetails: req.session.user })
+      res.render('user/viewOrderedProducts', { user: true, wishlistCount, products,totalValue, totalOrderAmount, cartCount, userDetails: req.session.user })
 
     }).catch((error)=>{
       console.log(error,"getOrderProducts");

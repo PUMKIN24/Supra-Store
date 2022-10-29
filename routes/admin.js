@@ -42,9 +42,9 @@ const verifyLogout = ((req, res, next) => {
 
 
 // LOGIN PAGE ----------------------------------------------------------------
-router.get('/',verifyLogout,adminController.getLoginPage)
+router.get('/',adminController.getLoginPage)
 
-router.post('/',adminController.postLoginPage)
+router.post('/',  adminController.postLoginPage)
 
 //  HOMEPAGE-----------------------------------------------------------------
 router.get('/adminHome',verifyAdmin, adminController.getAdminHome) 

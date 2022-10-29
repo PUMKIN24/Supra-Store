@@ -10,8 +10,11 @@ module.exports = {
       
     
       postLoginPage: (req, res) => {
+        console.log(req.body)
         adminHelpers.doLogin(req.body).then((response) => {
+
           if (response.status) {
+            req.session.admin=true
             res.redirect('/admin/adminHome')
           } else {
             res.redirect('/admin')

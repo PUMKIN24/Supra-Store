@@ -81,10 +81,7 @@
 
                                 <input type="text" id="addressId" name="addressId" value="" hidden>
                             </div>
-                            <div>
-
-                                <input type="text" id="couponNamess" name="couponName" value="" hidden>
-                            </div>
+                           
                             <div>
 
                                 <input type="text" id="grandTotal" name="grandTotal" value="{{totalValue.total}}"
@@ -132,7 +129,7 @@
                                     </div>
 
                                 </div>
-                                <button class="primary-btn" onclick="couponUse('{{userDetails._id}}')"
+                                
                                     type="submit">Confirm </button>
                             </div>
                         </div>
@@ -141,7 +138,7 @@
             </div>
             <div class="col-lg-8">
                 <div class="row">
-                    {{#each userDetails}}
+                    {{#each userDetails.address}}
                     <div class="col-md-4">
                         <div class="card mb-4 mb-md-0">
                             <div class="card-body">
@@ -214,10 +211,57 @@
                     }
                     else {
                         console.log("razorPayPayment")
+                         razorpayPayment(response)
                        
                     }
                 })
             })
         })
+
+                function razorpayPayment(order) {
+            var options = {
+                "key": "rzp_test_jptkYmRlh3dK8K", // Enter the Key ID generated from the Dashboard
+                "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "USD",
+                "name": "supra",
+                "description": "Test Transaction",
+                "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+                    verifyPayment(response, order)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+
+        
+        function verifyPayment(payment, order) {
+            $.ajax({
+                url: '/verify-payment',
+                data: {
+                    payment,
+                    order
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.status) {
+                        location.href = '/orderPlaced'
+                    } else {
+                        alert("Payment failed")
+                    }
+                }
+            })
+        }
 
         </script>

@@ -144,6 +144,8 @@ orders page created
 
 view ordered products done
 
+payment integration
+
 
 
 
